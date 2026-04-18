@@ -1,0 +1,112 @@
+@startuml
+title Base de Datos - Bendito Sabor
+
+' ===== ENTIDADES =====
+
+entity Usuario {
+  +id_usuario : int <<PK>>
+  nombre : string
+  correo : string
+  password : string
+  telefono : string
+  direccion : string
+  rol : string
+  fecha_creacion : datetime
+}
+
+entity Cliente {
+  +id_cliente : int <<PK>>
+  id_usuario : int <<FK>>
+  preferencias : string
+}
+
+entity Empleado {
+  +id_empleado : int <<PK>>
+  id_usuario : int <<FK>>
+  cargo : string
+}
+
+entity Categoria {
+  +id_categoria : int <<PK>>
+  nombre : string
+  descripcion : string
+}
+
+entity Producto {
+  +id_producto : int <<PK>>
+  nombre : string
+  descripcion : string
+  precio : float
+  stock : int
+  imagen_url : string
+  id_categoria : int <<FK>>
+  fecha_creacion : datetime
+}
+
+entity Inventario {
+  +id_inventario : int <<PK>>
+  id_producto : int <<FK>>
+  cantidad : int
+  stock_minimo : int
+  ultima_actualizacion : datetime
+}
+
+entity Pedido {
+  +id_pedido : int <<PK>>
+  id_cliente : int <<FK>>
+  fecha : datetime
+  total : float
+  estado : string
+}
+
+entity Detalle_Pedido {
+  +id_detalle : int <<PK>>
+  id_pedido : int <<FK>>
+  id_producto : int <<FK>>
+  cantidad : int
+  precio_unitario : float
+  subtotal : float
+}
+
+entity Pago {
+  +id_pago : int <<PK>>
+  id_pedido : int <<FK>>
+  metodo : string
+  monto : float
+  estado : string
+  fecha_pago : datetime
+}
+
+entity Notificacion {
+  +id_notificacion : int <<PK>>
+  id_usuario : int <<FK>>
+  mensaje : string
+  leido : boolean
+  fecha : datetime
+}
+
+entity Ruta_Entrega {
+  +id_ruta : int <<PK>>
+  id_pedido : int <<FK>>
+  direccion_entrega : string
+  estado : string
+}
+
+' ===== RELACIONES =====
+
+Usuario ||--o{ Cliente
+Usuario ||--o{ Empleado
+
+Cliente ||--o{ Pedido
+Pedido ||--o{ Detalle_Pedido
+Producto ||--o{ Detalle_Pedido
+
+Producto }o--|| Categoria
+Producto ||--|| Inventario
+
+Pedido ||--|| Pago
+Usuario ||--o{ Notificacion
+
+Pedido ||--|| Ruta_Entrega
+
+@enduml

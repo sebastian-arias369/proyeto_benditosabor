@@ -1,0 +1,57 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres:15
+    container_name: bendito_db
+    restart: always
+    environment:
+      POSTGRES_DB: bendito_sabor
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin123
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - bendito_network
+
+  postgrest:
+    image: postgrest/postgrest
+    container_name: bendito_api
+    restart: always
+    depends_on:
+      - db
+    ports:
+      - "3000:3000"
+    environment:
+      PGRST_DB_URI: postgres://admin:admin123@db:5432/bendito_sabor
+      PGRST_DB_SCHEMA: public
+      PGRST_DB_ANON_ROLE: web_anon
+    networks:
+      - bendito_network
+
+  backend:
+    build: .
+    container_name: bendito_backend
+    restart: always
+    depends_on:
+      - db
+    ports:
+      - "4000:4000"
+    environment:
+      DB_HOST: db
+      DB_USER: admin
+      DB_PASSWORD: admin123
+      DB_NAME: bendito_sabor
+      DB_PORT: 5432
+    networks:
+      - bendito_network
+
+volumes:
+  db_data:
+
+networks:
+  bendito_network:
+    driver: bridge

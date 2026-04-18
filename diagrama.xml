@@ -1,0 +1,107 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Bendito Sabor - BD UML">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <!-- USUARIO -->
+        <mxCell id="usuario" value="USUARIO
+------------------------
+id_usuario (PK)
+nombre
+correo
+password
+telefono
+direccion
+rol
+fecha_creacion" style="shape=rectangle;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="50" y="50" width="200" height="200" as="geometry"/>
+        </mxCell>
+
+        <!-- CLIENTE -->
+        <mxCell id="cliente" value="CLIENTE
+------------------------
+id_cliente (PK)
+id_usuario (FK)
+preferencias" style="shape=rectangle;" vertex="1" parent="1">
+          <mxGeometry x="300" y="50" width="200" height="120" as="geometry"/>
+        </mxCell>
+
+        <!-- EMPLEADO -->
+        <mxCell id="empleado" value="EMPLEADO
+------------------------
+id_empleado (PK)
+id_usuario (FK)
+cargo" style="shape=rectangle;" vertex="1" parent="1">
+          <mxGeometry x="300" y="200" width="200" height="120" as="geometry"/>
+        </mxCell>
+
+        <!-- PRODUCTO -->
+        <mxCell id="producto" value="PRODUCTO
+------------------------
+id_producto (PK)
+nombre
+descripcion
+precio
+stock
+id_categoria (FK)
+imagen_url" style="shape=rectangle;" vertex="1" parent="1">
+          <mxGeometry x="50" y="300" width="220" height="180" as="geometry"/>
+        </mxCell>
+
+        <!-- CATEGORIA -->
+        <mxCell id="categoria" value="CATEGORIA
+------------------------
+id_categoria (PK)
+nombre
+descripcion" style="shape=rectangle;" vertex="1" parent="1">
+          <mxGeometry x="300" y="350" width="200" height="120" as="geometry"/>
+        </mxCell>
+
+        <!-- PEDIDO -->
+        <mxCell id="pedido" value="PEDIDO
+------------------------
+id_pedido (PK)
+id_cliente (FK)
+fecha
+total
+estado" style="shape=rectangle;" vertex="1" parent="1">
+          <mxGeometry x="550" y="50" width="220" height="150" as="geometry"/>
+        </mxCell>
+
+        <!-- DETALLE_PEDIDO -->
+        <mxCell id="detalle" value="DETALLE_PEDIDO
+------------------------
+id_detalle (PK)
+id_pedido (FK)
+id_producto (FK)
+cantidad
+precio_unitario
+subtotal" style="shape=rectangle;" vertex="1" parent="1">
+          <mxGeometry x="550" y="250" width="240" height="180" as="geometry"/>
+        </mxCell>
+
+        <!-- INVENTARIO -->
+        <mxCell id="inventario" value="INVENTARIO
+------------------------
+id_inventario (PK)
+id_producto (FK)
+cantidad
+stock_minimo" style="shape=rectangle;" vertex="1" parent="1">
+          <mxGeometry x="50" y="520" width="220" height="140" as="geometry"/>
+        </mxCell>
+
+        <!-- RELACIONES -->
+        <mxCell id="r1" edge="1" parent="1" source="usuario" target="cliente"/>
+        <mxCell id="r2" edge="1" parent="1" source="usuario" target="empleado"/>
+        <mxCell id="r3" edge="1" parent="1" source="cliente" target="pedido"/>
+        <mxCell id="r4" edge="1" parent="1" source="pedido" target="detalle"/>
+        <mxCell id="r5" edge="1" parent="1" source="producto" target="detalle"/>
+        <mxCell id="r6" edge="1" parent="1" source="producto" target="inventario"/>
+        <mxCell id="r7" edge="1" parent="1" source="producto" target="categoria"/>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
