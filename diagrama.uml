@@ -14,17 +14,6 @@ entity Usuario {
   fecha_creacion : datetime
 }
 
-entity Cliente {
-  +id_cliente : int <<PK>>
-  id_usuario : int <<FK>>
-  preferencias : string
-}
-
-entity Empleado {
-  +id_empleado : int <<PK>>
-  id_usuario : int <<FK>>
-  cargo : string
-}
 
 entity Categoria {
   +id_categoria : int <<PK>>
@@ -53,7 +42,7 @@ entity Inventario {
 
 entity Pedido {
   +id_pedido : int <<PK>>
-  id_cliente : int <<FK>>
+  id_usuario : int <<FK>>
   fecha : datetime
   total : float
   estado : string
@@ -94,10 +83,7 @@ entity Ruta_Entrega {
 
 ' ===== RELACIONES =====
 
-Usuario ||--o{ Cliente
-Usuario ||--o{ Empleado
-
-Cliente ||--o{ Pedido
+Usuario ||--o{ Pedido
 Pedido ||--o{ Detalle_Pedido
 Producto ||--o{ Detalle_Pedido
 
